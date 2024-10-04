@@ -1,5 +1,3 @@
-Here's a sample `README.md` file for your GitHub project, incorporating the details you've provided:
-
 # CS 3105 Express.js Backend Project
 
 ## Project Description
