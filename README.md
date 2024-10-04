@@ -9,12 +9,12 @@ To get started with the project, follow these steps:
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/jonathan-christ/express-backend.git
+   git clone https://github.com/jonathan-christ/3105-express-backend.git
    ```
 
 2. Navigate to the project directory:
    ```bash
-   cd express-backend
+   cd 3105-express-backend
    ```
 
 3. Install the dependencies:
