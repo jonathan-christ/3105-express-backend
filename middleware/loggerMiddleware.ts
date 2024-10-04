@@ -15,7 +15,6 @@ const formatDate = (date: Date) => {
 export const loggerMiddleware = (req: Request, res: Response, next: NextFunction): void => {
   const startTime = Date.now();
   const { method, url } = req;
-  const { statusCode } = res;
 
   //log process start
   console.log(`[${formatDate(new Date())}] [REQ] "${method} ${url}"`);
@@ -23,7 +22,7 @@ export const loggerMiddleware = (req: Request, res: Response, next: NextFunction
   // log process finish time
   res.on('finish', () => {
     const duration = Date.now() - startTime;
-    console.log(`[${formatDate(new Date())}] [RES] "${method} ${url} ${statusCode}" [${duration}ms]`);
+    console.log(`[${formatDate(new Date())}] [RES] "${method} ${url} ${res.statusCode}" [${duration}ms]`);
   });
 
   next();
