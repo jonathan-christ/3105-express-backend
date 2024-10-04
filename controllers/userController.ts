@@ -4,7 +4,7 @@ import { env } from "../config/env.ts";
 import Joi from "joi";
 import jwt from "jsonwebtoken";
 
-class UserController extends UserModel {
+export class UserController extends UserModel {
   private readonly loginSchema = Joi.object({
     username: Joi.string().alphanum().min(3).max(30).required(),
     password: Joi.string().required().pattern(new RegExp('^[a-zA-Z0-9]{3,30}$')),
@@ -24,7 +24,8 @@ class UserController extends UserModel {
     const { error, value } = this.loginSchema.validate(req.body);
 
     if (error) {
-      res.status(400).json({ message: error.message });
+      res.status(400).json({ message: error.message, data: req.body });
+      return;
     }
 
     const user = this.getUserByDetails(value.username, value.password);
@@ -38,11 +39,11 @@ class UserController extends UserModel {
       id: user.id,
       username: user.username,
       email: user.email
-    }, env.JWT_SECRET, {
-      expiresIn: '1h'
-    });
+    },
+      env.JWT_SECRET
+    );
 
-    res.status(200).json({ message: 'Login successful!', data: token });
+    res.status(200).json({ message: 'Login successful!', token });
   };
 
   public register = (req: Request, res: Response): void => {
@@ -62,8 +63,8 @@ class UserController extends UserModel {
     res.status(200).json({ message: "Registration successful!", data: user });
   }
 
-  public getProfile = (_: Request, res: Response) => {
-    const user = this.getUserById((res.locals.decodedToken as User).id);
+  public profile = (_: Request, res: Response) => {
+    const user = this.getUserById((res.locals.token as User).id);
     if (!user) {
       res.status(400).json({ message: "User not found?!" });
     }
