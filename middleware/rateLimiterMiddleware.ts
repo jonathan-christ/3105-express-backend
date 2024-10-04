@@ -29,7 +29,7 @@ export const rateLimiter = (options: { windowMs: number; maxRequests: number }) 
     // update record
     requests[clientIp] = { count, startTime };
     if (count > options.maxRequests) {
-      res.status(400).json({ message: "Too many requests, please try again later." });
+      res.status(429).json({ message: "Too many requests, please try again later." });
       return;
     }
 
