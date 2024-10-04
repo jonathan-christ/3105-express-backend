@@ -30,7 +30,7 @@ class User implements IUser {
 }
 
 //user class data and methods handler
-class UserModel {
+export class UserModel {
   private users: User[] = [];
 
   protected createUser = ({ username, password, email }: IUserData): User | null => {
