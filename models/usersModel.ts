@@ -33,7 +33,7 @@ class User implements IUser {
 export class UserModel {
   private users: User[] = [];
 
-  protected createUser = ({ username, password, email }: IUserData): User | null => {
+  protected createUser = (username: string, password: string, email: string): User | null => {
     const id = this.users.length;
     const newUser = new User(id, username, password, email);
     this.users.push(newUser);
