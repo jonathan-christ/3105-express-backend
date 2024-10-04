@@ -1,5 +1,5 @@
 import type { Request, Response } from "express";
-import { UserModel } from "../models/usersModel.ts";
+import { UserModel, User } from "../models/usersModel.ts";
 import { env } from "../config/env.ts";
 import Joi from "joi";
 import jwt from "jsonwebtoken";
@@ -42,7 +42,7 @@ class UserController extends UserModel {
       expiresIn: '1h'
     });
 
-    res.status(200).json({ message: 'Login successful!', token });
+    res.status(200).json({ message: 'Login successful!', data: token });
   };
 
   public register = (req: Request, res: Response): void => {
@@ -59,10 +59,15 @@ class UserController extends UserModel {
       return;
     }
 
-    res.status(200).json({ message: "Registration successful!" });
+    res.status(200).json({ message: "Registration successful!", data: user });
   }
 
   public getProfile = (_: Request, res: Response) => {
-    const user = this.getUserById(res.locals.decodedToken as User)
+    const user = this.getUserById((res.locals.decodedToken as User).id);
+    if (!user) {
+      res.status(400).json({ message: "User not found?!" });
+    }
+
+    res.status(200).json({ message: "User found!", data: user });
   }
 }

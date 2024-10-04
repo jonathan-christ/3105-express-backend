@@ -10,7 +10,7 @@ interface IUser extends IUserData {
   id: number,
 }
 
-class User implements IUser {
+export class User implements IUser {
   public id: number;
   public username: string;
   public password: string;
