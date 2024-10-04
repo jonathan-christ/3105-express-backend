@@ -1,7 +1,6 @@
-import 'dotenv/config';
 import express, { urlencoded, json } from "express";
+import { env } from "./config/env.ts";
 
-const port = process.env.PORT || 8080;
 const app = express();
 
 app.use(urlencoded({ extended: true }));
@@ -11,6 +10,6 @@ app.get("/", (req, res) => {
   res.status(200).send("Hello there");
 })
 
-app.listen(port, () => {
-  console.log(`Server is listening at port: ${port}`);
+app.listen(env.PORT, () => {
+  console.log(`Server is listening at port: ${env.PORT}`);
 })
