@@ -1,11 +1,13 @@
 import express, { urlencoded, json } from "express";
 import { env } from "./config/env.ts";
 import { userRouter } from "./routes/user.ts";
+import { loggerMiddleware } from "./middleware/loggerMiddleware.ts";
 
 const app = express();
 
+app.use(loggerMiddleware);
 app.use(urlencoded({ extended: true }));
-app.use(json())
+app.use(json());
 
 app.use("/", userRouter);
 
