@@ -22,7 +22,10 @@ export const loggerMiddleware = (req: Request, res: Response, next: NextFunction
   // log process finish time
   res.on('finish', () => {
     const duration = Date.now() - startTime;
-    console.log(`[${formatDate(new Date())}] [RES] "${method} ${url} ${res.statusCode}" [${duration}ms]`);
+    const { statusCode } = res;
+    const logStatus = (statusCode >= 200 && statusCode < 300) ? "[GOOD]" : "[ERROR]";
+
+    console.log(`[${formatDate(new Date())}] [RES] ${logStatus} "${method} ${url} ${statusCode}" [${duration}ms]`);
   });
 
   next();
